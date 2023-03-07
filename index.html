@@ -1,82 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 5 - CreateEelement</title>
-    <style>
-        h1{
-            text-align: center;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lab 5 - CreateEelement</title>
+        <style>
+            h1 {
+                text-align: center;
+            }
 
-        .container{
-            border: 5px solid rgb(176, 16, 16);
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
-        }
+            .container {
+                border: 5px solid rgb(176, 16, 16);
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 1rem;
+                padding: 1rem;
+            }
 
-        button{
-            margin-bottom: 1rem;
-        }
+            button {
+                margin-bottom: 1rem;
+            }
 
-        /*object to spin*/
-        .box{
-            padding: 2rem;
-            border: 3px dashed rgb(236, 9, 9);
-            transition: all 2s;
-        }
+            /*object to spin*/
+            .box {
+                padding: 2rem;
+                border: 3px dashed rgb(236, 9, 9);
+                transition: all 2s;
+            }
 
-        /*to make spin*/
-        .spin{
-            rotate: 360deg;
-            border-radius: 50%;
-        }
-        
-/*******************slides********************/
+            /*to make spin*/
+            .spin {
+                rotate: 360deg;
+                border-radius: 50%;
+            }
 
+            /*******************slides********************/
 
-        .slides{
-            width: 400px;
-            margin: auto;
-        }
+            .slides {
+                width: 400px;
+                margin: auto;
+            }
 
-        .slides figure {
-            margin:0;   
-        }
+            .slides figure {
+                margin: 0;
+            }
 
-        img{
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+            img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
 
-        .slides .nxt {
-            float:right;
-        }
-    </style>
-</head>
+            .slides .nxt {
+                float: right;
+            }
+        </style>
+    </head>
 
-<body>
-    <h1>Dynamically create objects with Javascript</h1>
-    <button class="make-boxes" data-holder=".container">Make boxes</button>
-    <div class="container"></div>
+    <body>
+        <h1>Dynamically create objects with Javascript</h1>
+        <button class="make-boxes" data-holder=".container">Make boxes</button>
+        <div class="container"></div>
 
-    <h1>Slide Gallery</h1>
-    <div class="slides">
-        <figure><img class="pics" src="images/pic1.jpg" alt=""></figure>
-        <a class="prev" href="">previous</a>
-        <a class="nxt" href="">next</a>
-    </div>
+        <h1>Slide Gallery</h1>
+        <div class="slides">
+            <figure><img class="pics" src="images/pic1.jpg" alt="" /></figure>
+            <a class="prev" href="">previous</a>
+            <a class="nxt" href="">next</a>
+        </div>
 
-    <script>
-        const makeButton = document.querySelector('.make-boxes');
-        //const container = document.querySelector('.container');//auto generate boxes
+        <script>
+            const makeButton = document.querySelector(".make-boxes");
+            //const container = document.querySelector('.container');//auto generate boxes
 
-        /*
+            /*
         //auto generate boxes
         button.addEventListener('click', (e) => {  //create a lot of boxes
             for(let i = 0; i < 100; i++){
@@ -87,92 +86,94 @@
             
         })
         */
-        makeButton.addEventListener("click", renderBoxes);
+            makeButton.addEventListener("click", renderBoxes);
 
-        //get input from user
-        function getNum() {
-            var numBoxes = Number(prompt("how many boxes?"));
+            //get input from user
+            function getNum() {
+                var numBoxes = Number(prompt("how many boxes?"));
 
-            if (numBoxes <= 0 || Number.isNaN(numBoxes)) {
-                return 0;
-            }
-            return numBoxes;
-        }
-
-        //Based on user input.
-        function makeBoxes() {
-            const numBoxes = getNum();
-            //We use tempHolder to build the boxes in memory only.
-            const tempHolder = document.createDocumentFragment();
-
-            for (let i = 1; i <= numBoxes; i++) {
-                let box = document.createElement("DIV");
-                //let txt = document.createTextNode(i);
-                box.className = "box";
-
-                //make spin
-                box.addEventListener('click', (e) => {
-                    e.target.classList.toggle('spin');
-                });
-
-                //box.appendChild(txt);
-                tempHolder.appendChild(box);
+                if (numBoxes <= 0 || Number.isNaN(numBoxes)) {
+                    return 0;
+                }
+                return numBoxes;
             }
 
-            return tempHolder;
-        }
+            //Based on user input.
+            function makeBoxes() {
+                const numBoxes = getNum();
+                //We use tempHolder to build the boxes in memory only.
+                const tempHolder = document.createDocumentFragment();
 
-        function renderBoxes(e) {
-            //get the data-holder attribute value from the button
-            const containerName = e.target.dataset.holder;
-            const container = document.querySelector(containerName);
-            const boxes = makeBoxes();
+                for (let i = 1; i <= numBoxes; i++) {
+                    let box = document.createElement("DIV");
+                    //let txt = document.createTextNode(i);
+                    box.className = "box";
 
-            if (boxes.children.length === 0) {
-                container.innerHTML = "Try Again. Please type a positive whole number";
-            } 
-            else {
-                // clearout previous stuff before adding new boxes
-                container.innerHTML = "";
-                container.appendChild(boxes);
+                    //make spin
+                    box.addEventListener("click", (e) => {
+                        e.target.classList.toggle("spin");
+                    });
+
+                    //box.appendChild(txt);
+                    tempHolder.appendChild(box);
+                }
+
+                return tempHolder;
             }
 
-            boxes.addEventListener('click', makeBoxes);
-        }
+            function renderBoxes(e) {
+                //get the data-holder attribute value from the button
+                const containerName = e.target.dataset.holder;
+                const container = document.querySelector(containerName);
+                const boxes = makeBoxes();
 
-        //slides-------------------
-        const baseURL = 'http://aunyce.com/artdm-174/labs/lab4/images/';
-        const nxt = document.querySelector('.nxt');
-        const prev = document.querySelector('.prev');
-        const slide = document.querySelector('.pics');
-        const reds = ['pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg', 'pic6.jpg'];
-        let index = 0;
+                if (boxes.children.length === 0) {
+                    container.innerHTML = "Try Again. Please type a positive whole number";
+                } else {
+                    // clearout previous stuff before adding new boxes
+                    container.innerHTML = "";
+                    container.appendChild(boxes);
+                }
 
-        nxt.onclick = function(e){
-            e.preventDefault();
-
-            slide.src = baseURL + reds[index];
-            index ++;
-            console.log(index);
-
-            if(index >= reds.length) {
-                index = 0;
+                boxes.addEventListener("click", makeBoxes);
             }
-            
-        }
 
-        prev.onclick = function(e){
-            e.preventDefault();
+            //slides-------------------
+            const baseURL = "http://aunyce.com/artdm-174/labs/lab4/images/";
+            const nxt = document.querySelector(".nxt");
+            const prev = document.querySelector(".prev");
+            const slide = document.querySelector(".pics");
+            const reds = ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg", "pic6.jpg"];
+            let index = 0;
 
-            
-            slide.src = baseURL + reds[index - 1];
-            index --;
-            console.log(index);
+            nxt.onclick = function (e) {
+                e.preventDefault();
 
-            if(index === 0) {
-                index = 5;
-            }    
-        }
-    </script>
-</body>
+                slide.src = baseURL + reds[index];
+                index++;
+                console.log(index);
+
+                if (index >= reds.length) {
+                    index = 0;
+                }
+            };
+
+            prev.onclick = function (e) {
+                e.preventDefault();
+
+                // TB: What happens if I click on previous first?
+                // index is initialized at zero on line 149.
+                // that means the first click takes us to position -1
+                // You may want to move your index conditional check
+                // to the top of this function.
+                slide.src = baseURL + reds[index - 1];
+                index--;
+                console.log(index);
+
+                if (index === 0) {
+                    index = 5;
+                }
+            };
+        </script>
+    </body>
 </html>
