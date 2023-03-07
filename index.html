@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+<!-- 
+TB: Despite being a practice, let's always break our CSS, JS, and HTML into separate files. I keep then in one file for my demos for simplicity only.
+-->
+
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -146,33 +151,36 @@
             const reds = ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg", "pic6.jpg"];
             let index = 0;
 
+            // let's use event listeners moving forward
             nxt.onclick = function (e) {
                 e.preventDefault();
 
-                slide.src = baseURL + reds[index];
+                // its better to change the value first
+                // then handle the value as needed
                 index++;
-                console.log(index);
 
+                // doing the conditional check right after
+                // value is changed will protect the remaining code.
                 if (index >= reds.length) {
                     index = 0;
                 }
+
+                // now that the value has been normalized, use it.
+                slide.src = baseURL + reds[index];
+                console.log(index);
             };
 
+            // use same logic patter as next button
             prev.onclick = function (e) {
                 e.preventDefault();
-
-                // TB: What happens if I click on previous first?
-                // index is initialized at zero on line 149.
-                // that means the first click takes us to position -1
-                // You may want to move your index conditional check
-                // to the top of this function.
-                slide.src = baseURL + reds[index - 1];
                 index--;
-                console.log(index);
 
-                if (index === 0) {
+                if (index < 0) {
                     index = 5;
                 }
+
+                slide.src = baseURL + reds[index];
+                console.log(index);
             };
         </script>
     </body>
